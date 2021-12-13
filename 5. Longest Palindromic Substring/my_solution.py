@@ -1,18 +1,11 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        
-        buffer = ''
-        palindromes = []
-        
-        palindromes.append(s[0])
-        
-        for i, c in enumerate(s):
-            buffer+=c
-            for j, d in enumerate(s, i+1):
-                if j <= len(s) - 1:
-                    buffer+=s[j]
-                    if buffer == buffer[::-1]:
-                        palindromes.append(buffer)
-            buffer=''
-        
-        return max(palindromes, key=len)
+        m = ''  # Memory to remember a palindrome
+        for i in range(len(s)):  # i = start, O = n
+            for j in range(len(s), i, -1):  # j = end, O = n^2
+                if len(m) >= j-i:  # To reduce time
+                    break
+                elif s[i:j] == s[i:j][::-1]:
+                    m = s[i:j]
+                    break
+        return m
